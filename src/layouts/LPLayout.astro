@@ -27,7 +27,7 @@ const config = motionConfigs[personality];
   <body style={`--accent: ${config.accentColor}`}>
     <!-- ナビゲーションバー -->
     <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5 mix-blend-difference">
-      <a href="/" class="text-sm font-medium tracking-widest uppercase text-white opacity-70 hover:opacity-100 transition-opacity" style={`transition-duration: var(--duration-${personality}-fast)`}>
+      <a href={import.meta.env.BASE_URL} class="text-sm font-medium tracking-widest uppercase text-white opacity-70 hover:opacity-100 transition-opacity" style={`transition-duration: var(--duration-${personality}-fast)`}>
         ← 比較に戻る
       </a>
       <span class="text-xs tracking-widest uppercase text-white opacity-40">
