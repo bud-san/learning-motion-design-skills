@@ -7,6 +7,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://bud-san.github.io',
   base: '/learning-motion-design-skills',
+  trailingSlash: 'always',
   integrations: [react()],
   vite: {
     plugins: [tailwindcss()],
