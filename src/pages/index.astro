@@ -1,0 +1,122 @@
+---
+import '../styles/base.css';
+import { motionConfigs } from '../motion/personalities';
+import type { MotionPersonality } from '../motion/types';
+
+const personalities: MotionPersonality[] = ['premium', 'energetic', 'playful', 'corporate'];
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Motion Design — パーソナリティ比較</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body style="background-color: var(--color-paper); color: var(--color-ink)">
+
+    <!-- ヘッダー -->
+    <header class="px-8 md:px-16 pt-16 pb-12 max-w-6xl mx-auto">
+      <p class="text-xs tracking-[0.25em] uppercase opacity-40 mb-4">Motion Design Skill</p>
+      <h1 class="text-4xl md:text-6xl mb-6" style="font-family: var(--font-display)">
+        モーションで、<br />体験は変わる。
+      </h1>
+      <p class="max-w-lg opacity-60 leading-relaxed">
+        同じコンテンツ、同じデザイン。違うのはモーションだけ。<br />
+        4つのパーソナリティを比較して、動きの力を体験してください。
+      </p>
+    </header>
+
+    <div class="w-full h-px bg-current opacity-10" aria-hidden="true"></div>
+
+    <!-- バリアントグリッド -->
+    <section class="grid grid-cols-1 md:grid-cols-2">
+      {
+        personalities.map((p, i) => {
+          const config = motionConfigs[p];
+          return (
+            <a
+              href={`/${p}`}
+              class="nav-card group relative overflow-hidden border-b border-r border-current/10 p-12 md:p-16 block"
+              style="min-height: 340px"
+            >
+              <div
+                class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={`background-color: color-mix(in oklch, ${config.accentColor} 8%, transparent)`}
+                aria-hidden="true"
+              />
+              <div
+                class="absolute top-0 left-0 w-0 group-hover:w-full h-px transition-all duration-500 pointer-events-none"
+                style={`background-color: ${config.accentColor}`}
+                aria-hidden="true"
+              />
+
+              <div class="relative z-10 h-full flex flex-col justify-between">
+                <div>
+                  <span class="text-xs font-mono opacity-20 mb-8 block">0{i + 1}</span>
+                  <h2 class="text-3xl md:text-4xl mb-3" style="font-family: var(--font-display)">
+                    {config.label}
+                  </h2>
+                  <p class="text-sm opacity-50 mb-6 tracking-wider">{config.tagline}</p>
+                  <p class="opacity-70 italic" style="font-family: var(--font-display)">
+                    「{config.heroTitle}」
+                  </p>
+                </div>
+                <div class="flex items-center gap-3 mt-8">
+                  <span
+                    class="inline-block w-6 h-px transition-all duration-300 group-hover:w-10"
+                    style={`background-color: ${config.accentColor}`}
+                  />
+                  <span class="text-xs tracking-widest uppercase opacity-50 group-hover:opacity-100 transition-opacity duration-300">
+                    体験する →
+                  </span>
+                </div>
+              </div>
+
+              <div
+                class="absolute bottom-4 right-6 text-[10vw] leading-none font-bold select-none pointer-events-none"
+                style="font-family: var(--font-display); opacity: 0.04; color: var(--color-ink)"
+                aria-hidden="true"
+              >
+                {config.label.charAt(0)}
+              </div>
+            </a>
+          );
+        })
+      }
+    </section>
+
+    <footer class="px-8 md:px-16 py-12 max-w-6xl mx-auto">
+      <div class="border-t border-current/10 pt-8 flex items-center justify-between">
+        <p class="text-xs opacity-30 tracking-wider">
+          motion-design-skill by LottieFiles × frontend-design-skill
+        </p>
+        <p class="text-xs opacity-20">Astro + GSAP + Tailwind v4</p>
+      </div>
+    </footer>
+
+  </body>
+</html>
+
+<script>
+  import gsap from 'gsap';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    gsap.fromTo(
+      'header',
+      { opacity: 0, y: 15 },
+      { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }
+    );
+    gsap.fromTo(
+      '.nav-card',
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.08, delay: 0.2 }
+    );
+  });
+</script>

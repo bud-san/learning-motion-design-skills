@@ -1,0 +1,94 @@
+---
+import type { MotionPersonality } from '../motion/types';
+import { motionConfigs } from '../motion/personalities';
+
+interface Props {
+  personality: MotionPersonality;
+}
+
+const { personality } = Astro.props;
+const config = motionConfigs[personality];
+
+const features = [
+  {
+    number: '01',
+    title: '直感的な操作性',
+    body: 'ユーザーが迷わない、自然な動線設計。細部の動きが次のアクションを予感させる。',
+    icon: '◎',
+  },
+  {
+    number: '02',
+    title: '洗練されたデザイン',
+    body: '細部まで丁寧に作り込まれた品質。一貫した視覚言語がブランドの深みを生む。',
+    icon: '◈',
+  },
+  {
+    number: '03',
+    title: '確かな信頼感',
+    body: '一貫したブランド表現で信頼を積み重ねる。モーションは約束を守る態度を示す。',
+    icon: '◇',
+  },
+];
+---
+
+<section class="py-32 px-8 md:px-16 lg:px-24">
+  <div class="max-w-6xl mx-auto">
+    <!-- セクションヘッダー -->
+    <div class="mb-20 grid grid-cols-12 gap-4">
+      <div class="col-span-12 lg:col-span-5">
+        <p class="text-xs tracking-[0.25em] uppercase opacity-40 mb-4">Features</p>
+        <h2 class="text-3xl md:text-4xl" style="font-family: var(--font-display)">
+          選ばれる理由
+        </h2>
+      </div>
+      <div class="col-span-12 lg:col-span-6 lg:col-start-7 self-end">
+        <p class="opacity-50 leading-relaxed">
+          表面的な美しさではなく、使うたびに実感できる設計思想。
+          モーションはその哲学を、体で感じるものにする。
+        </p>
+      </div>
+    </div>
+
+    <!-- カードグリッド -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-current/10">
+      {
+        features.map((f) => (
+          <article class="feature-card relative overflow-hidden bg-[var(--color-paper)] p-10">
+            <!-- ホバー背景 (GSAP制御) -->
+            <div
+              class="card-bg absolute inset-0 pointer-events-none"
+              style={`background-color: color-mix(in oklch, ${config.accentColor} 8%, transparent); opacity: 0`}
+              aria-hidden="true"
+            />
+
+            <div class="relative z-10">
+              <!-- アイコン + 番号 -->
+              <div class="flex items-start justify-between mb-8">
+                <span
+                  class="card-icon text-3xl inline-block"
+                  style={`color: ${config.accentColor}`}
+                  aria-hidden="true"
+                >
+                  {f.icon}
+                </span>
+                <span class="text-xs opacity-20 font-mono">{f.number}</span>
+              </div>
+
+              <h3 class="card-title text-xl mb-4" style="font-family: var(--font-display)">
+                {f.title}
+              </h3>
+              <p class="text-sm opacity-60 leading-relaxed">{f.body}</p>
+            </div>
+
+            <!-- ボトムライン (GSAP制御) -->
+            <div
+              class="card-line absolute bottom-0 left-0 h-px"
+              style={`background-color: ${config.accentColor}; width: 0`}
+              aria-hidden="true"
+            />
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

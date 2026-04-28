@@ -1,0 +1,42 @@
+---
+import '../styles/base.css';
+import type { MotionPersonality } from '../motion/types';
+import { motionConfigs } from '../motion/personalities';
+
+interface Props {
+  personality: MotionPersonality;
+}
+
+const { personality } = Astro.props;
+const config = motionConfigs[personality];
+---
+
+<!doctype html>
+<html lang="ja" data-personality={personality}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{config.label} Motion — {config.tagline}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body style={`--accent: ${config.accentColor}`}>
+    <!-- ナビゲーションバー -->
+    <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5 mix-blend-difference">
+      <a href="/" class="text-sm font-medium tracking-widest uppercase text-white opacity-70 hover:opacity-100 transition-opacity" style={`transition-duration: var(--duration-${personality}-fast)`}>
+        ← 比較に戻る
+      </a>
+      <span class="text-xs tracking-widest uppercase text-white opacity-40">
+        {config.label} / {config.tagline}
+      </span>
+    </nav>
+
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>

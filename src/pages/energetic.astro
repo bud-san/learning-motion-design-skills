@@ -1,0 +1,28 @@
+---
+import LPLayout from '../layouts/LPLayout.astro';
+import Hero from '../components/Hero.astro';
+import FeatureCards from '../components/FeatureCards.astro';
+import Slider from '../components/Slider.astro';
+import CardList from '../components/CardList.astro';
+import CTABanner from '../components/CTABanner.astro';
+import Modal from '../components/Modal.astro';
+---
+
+<LPLayout personality="energetic">
+  <Hero personality="energetic" />
+  <FeatureCards personality="energetic" />
+  <Slider personality="energetic" />
+  <CardList personality="energetic" />
+  <CTABanner personality="energetic" />
+  <Modal personality="energetic" />
+</LPLayout>
+
+<script>
+  import gsap from 'gsap';
+  import { motionConfigs } from '../motion/personalities';
+  import { initPage } from '../motion/motion-base';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initPage(gsap, motionConfigs.energetic, { squash: true });
+  });
+</script>

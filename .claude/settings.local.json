@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem \"$env:USERPROFILE\\\\.volta\" -ErrorAction SilentlyContinue | Select-Object Name; Test-Path \"$env:USERPROFILE\\\\.volta\\\\bin\\\\volta.exe\")",
+      "Bash(wsl --exec /home/asada/.volta/bin/volta --version)",
+      "Bash('\\\\\\\\wsl.localhost\\\\Ubuntu\\\\home\\\\asada\\\\.volta\\\\bin\\\\volta' --version)",
+      "Read(///wsl.localhost/Ubuntu/home/asada/.volta/**)",
+      "Read(///wsl.localhost/Ubuntu/home/asada/.bun/**)",
+      "Bash(wsl -d Ubuntu bash -c ' *)"
+    ]
+  }
+}

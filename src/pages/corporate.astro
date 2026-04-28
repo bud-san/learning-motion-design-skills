@@ -1,0 +1,28 @@
+---
+import LPLayout from '../layouts/LPLayout.astro';
+import Hero from '../components/Hero.astro';
+import FeatureCards from '../components/FeatureCards.astro';
+import Slider from '../components/Slider.astro';
+import CardList from '../components/CardList.astro';
+import CTABanner from '../components/CTABanner.astro';
+import Modal from '../components/Modal.astro';
+---
+
+<LPLayout personality="corporate">
+  <Hero personality="corporate" />
+  <FeatureCards personality="corporate" />
+  <Slider personality="corporate" />
+  <CardList personality="corporate" />
+  <CTABanner personality="corporate" />
+  <Modal personality="corporate" />
+</LPLayout>
+
+<script>
+  import gsap from 'gsap';
+  import { motionConfigs } from '../motion/personalities';
+  import { initPage } from '../motion/motion-base';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initPage(gsap, motionConfigs.corporate);
+  });
+</script>

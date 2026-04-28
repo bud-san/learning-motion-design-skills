@@ -1,0 +1,148 @@
+---
+import type { MotionPersonality } from '../motion/types';
+import { motionConfigs } from '../motion/personalities';
+
+interface Props {
+  personality: MotionPersonality;
+}
+
+const { personality } = Astro.props;
+const config = motionConfigs[personality];
+
+const slides = [
+  {
+    tag: '導入事例',
+    quote: 'モーションを変えただけで、ユーザーの滞在時間が1.8倍になりました。動きは数字を動かす。',
+    author: '田中 健一',
+    role: 'プロダクトデザイナー',
+    company: 'TechFlow Inc.',
+  },
+  {
+    tag: 'お客様の声',
+    quote: '「なんか気持ちいい」という感覚の正体が、このスキルを使って初めて言語化できました。',
+    author: '佐藤 美咲',
+    role: 'UXリード',
+    company: 'Designary',
+  },
+  {
+    tag: '開発者より',
+    quote: 'パーソナリティ定数をひとつ変えるだけで、サイト全体の雰囲気が変わる。設計が美しい。',
+    author: '山本 拓海',
+    role: 'フロントエンドエンジニア',
+    company: 'Craftworks',
+  },
+  {
+    tag: '導入事例',
+    quote: 'クライアントへの提案でこのデモを見せたら、「これにします」と即決でした。',
+    author: '伊藤 彩香',
+    role: 'クリエイティブディレクター',
+    company: 'Studio Veil',
+  },
+];
+---
+
+<section class="py-32 px-8 md:px-16 lg:px-24 overflow-hidden">
+  <div class="max-w-6xl mx-auto">
+    <!-- ヘッダー -->
+    <div class="mb-16 flex items-end justify-between">
+      <div>
+        <p class="text-xs tracking-[0.25em] uppercase opacity-40 mb-4">Voices</p>
+        <h2 class="text-3xl md:text-4xl" style="font-family: var(--font-display)">
+          使った人の声
+        </h2>
+      </div>
+      <!-- スライドカウンター -->
+      <div class="slider-counter text-sm opacity-30 font-mono hidden md:block">
+        <span class="slider-current">01</span>
+        <span class="mx-2">／</span>
+        <span>{String(slides.length).padStart(2, '0')}</span>
+      </div>
+    </div>
+
+    <!-- スライダー本体 -->
+    <div class="slider-root relative overflow-hidden">
+      <!-- トラック: flex で横並び、width = スライド数 × 100% -->
+      <div
+        class="slider-track flex"
+        style={`width: ${slides.length * 100}%`}
+      >
+        {slides.map((s, i) => (
+          <div
+            class="slider-slide px-0 md:px-8"
+            style={`width: ${100 / slides.length}%`}
+          >
+            <div class="relative py-12 md:py-16">
+              <!-- 装飾引用符 -->
+              <div
+                class="absolute top-0 left-0 text-[8rem] leading-none select-none pointer-events-none"
+                style={`color: ${config.accentColor}; opacity: 0.12; font-family: var(--font-display); line-height: 0.8`}
+                aria-hidden="true"
+              >
+                "
+              </div>
+
+              <div class="relative z-10 pl-4 md:pl-0">
+                <!-- タグ -->
+                <span
+                  class="inline-block text-xs tracking-[0.2em] uppercase px-3 py-1 mb-8"
+                  style={`border: 1px solid ${config.accentColor}; color: ${config.accentColor}`}
+                >
+                  {s.tag}
+                </span>
+
+                <!-- 引用テキスト -->
+                <blockquote
+                  class="text-xl md:text-2xl lg:text-3xl mb-10 leading-relaxed max-w-3xl"
+                  style="font-family: var(--font-display)"
+                >
+                  {s.quote}
+                </blockquote>
+
+                <!-- 著者情報 -->
+                <div class="flex items-center gap-4">
+                  <div
+                    class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium flex-shrink-0"
+                    style={`background-color: color-mix(in oklch, ${config.accentColor} 15%, transparent); color: ${config.accentColor}`}
+                  >
+                    {s.author.charAt(0)}
+                  </div>
+                  <div>
+                    <p class="font-medium text-sm">{s.author}</p>
+                    <p class="text-xs opacity-50">{s.role} — {s.company}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- コントロール -->
+    <div class="mt-10 flex items-center gap-6">
+      <button
+        class="slider-prev w-10 h-10 flex items-center justify-center border border-current/20 text-sm hover:border-current/50 transition-colors"
+        aria-label="前へ"
+      >
+        ←
+      </button>
+      <button
+        class="slider-next w-10 h-10 flex items-center justify-center border border-current/20 text-sm hover:border-current/50 transition-colors"
+        aria-label="次へ"
+      >
+        →
+      </button>
+      <!-- ドット -->
+      <div class="flex items-center gap-2 ml-2">
+        {slides.map((_, i) => (
+          <button
+            class="slider-dot w-1.5 h-1.5 rounded-full bg-current transition-opacity"
+            style={`opacity: ${i === 0 ? 1 : 0.25}`}
+            data-index={i}
+            aria-label={`スライド ${i + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
